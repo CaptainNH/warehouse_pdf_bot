@@ -7,9 +7,9 @@ import (
 	"strconv"
 	"time"
 
-	//"github.com/CaptainNH/warehouse_pdf_bot/pkg/pdf"
 	tgbotapi "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 	"github.com/joho/godotenv"
+	"github.com/spf13/viper"
 )
 
 var (
@@ -36,8 +36,9 @@ func initialize() {
 
 func sendFile(bot *tgbotapi.BotAPI) {
 	pdf.CreateFile()
-	msg := tgbotapi.NewMessage(chatID, "Заходит скелет в бар...")
-	//msg := tgbotapi.NewDocument(chatID, tgbotapi.FilePath("C:\\Users\\777\\Desktop\\Трушин.pdf"))
+	log.Print("done!")
+	//msg := tgbotapi.NewMessage(chatID, "Заходит скелет в бар...")
+	msg := tgbotapi.NewDocument(chatID, tgbotapi.FilePath("test.pdf"))
 	bot.Send(msg)
 }
 
@@ -48,8 +49,17 @@ func monitor(bot *tgbotapi.BotAPI) {
 	}
 }
 
+func initConfig() error {
+	viper.AddConfigPath("configs")
+	viper.SetConfigName("config")
+	return viper.ReadInConfig()
+}
+
 func main() {
 	initialize()
+	if err := initConfig(); err != nil {
+		log.Fatalf("error initializing configs: %s", err.Error())
+	}
 
 	bot, err := tgbotapi.NewBotAPI(telegramBotToken)
 	if err != nil {

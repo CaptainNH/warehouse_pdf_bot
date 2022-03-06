@@ -1,0 +1,6 @@
+db:
+  username: "postgres"
+  host: "5.53.124.58"
+  port: "5432"
+  dbname: "warehouse_db"
+  sslmode: "disable"
