@@ -68,7 +68,6 @@ func initConfig() error {
 }
 
 func main() {
-	fileSendTime = "17:04"
 	initialize()
 	if err := initConfig(); err != nil {
 		log.Fatalf("error initializing configs: %s", err.Error())
